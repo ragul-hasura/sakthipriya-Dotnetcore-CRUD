@@ -54,5 +54,69 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            debugger;
+            loadData();
+        });
+        //Load Data function
+        function loadData() {
+            $.ajax({
+                url: "/Home/EmployeeDetails",
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    var html = '';
+                    $.each(result, function (key, item) {
+                        html += '<tr>';
+                        html += '<td>' + item.EmpId + '</td>';
+                        html += '<td>' + item.Name + '</td>';
+                        html += '<td>' + item.Age + '</td>';
+                        html += '<td>' + item.State + '</td>';
+                        html += '<td>' + item.Country + '</td>';
+                        html += '<td>' + item.Salary + '</td>';
+                        html += '<td><a href="#" onclick="return getbyID(' + item.EmpId + ')">Edit</a> | <a href="#" onclick="Delele(' + item.EmpId + ')">Delete</a></td>';
+                        html += '</tr>';
+                    });
+                    $('.tbody').html(html);
+                },
+                error: function (errormessage) {
+                    alert(errormessage.responseText);
+                }
+            });
+        };
+        //Function for getting the Data Based upon Employee ID
+        function getbyID(EmpID) {
+            $('#Name').css('border-color', 'lightgrey');
+            $('#Age').css('border-color', 'lightgrey');
+            $('#State').css('border-color', 'lightgrey');
+            $('#Country').css('border-color', 'lightgrey');
+            $('#Salary').css('border-color', 'lightgrey');
+            debugger;
+            $.ajax({
+                url: "/Home/GetbyID/" + EmpID,
+                typr: "GET",
+                contentType: "application/json;charset=UTF-8",
+                dataType: "json",
+                success: function (result) {
+                    debugger;
+                    $('#EmpID').val(result.EmployeeID);
+                    $('#Name').val(result.Name);
+                    $('#Age').val(result.Age);
+                    $('#State').val(result.State);
+                    $('#Country').val(result.Country);
+                    $('#Salary')..val(result.Salary);
+
+                    // $('#myModal').modal('show');
+                    $('#btnUpdate').show();
+                    $('#btnAdd').hide();
+                },
+                error: function (errormessage) {
+                    alert(errormessage.responseText);
+                }
+            });
+            return false;
+        };
+    </script>
 }

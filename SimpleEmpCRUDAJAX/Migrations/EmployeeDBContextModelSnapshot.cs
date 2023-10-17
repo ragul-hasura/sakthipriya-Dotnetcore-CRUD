@@ -49,7 +49,7 @@ namespace SimpleEmpCRUDAJAX.Migrations
 
                     b.HasKey("EmpId");
 
-                    b.ToTable("_employees");
+                    b.ToTable("EmployeeDetails");
                 });
 #pragma warning restore 612, 618
         }

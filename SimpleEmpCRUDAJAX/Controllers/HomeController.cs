@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using SimpleEmpCRUDAJAX.Models;
 using SimpleEmpCRUDAJAX.Repository;
+using System;
 using System.Diagnostics;
 
 namespace SimpleEmpCRUDAJAX.Controllers
@@ -9,66 +12,114 @@ namespace SimpleEmpCRUDAJAX.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IEmpRepository _empRepository;
-        public HomeController(ILogger<HomeController> logger, IEmpRepository empRepository)
+        private IConfiguration _Configuration;
+        private EmployeeDBContext _dBContext;
+        // EmployeeDBContext empDB = new EmployeeDBContext();
+
+        public HomeController(ILogger<HomeController> logger, IEmpRepository empRepository, EmployeeDBContext employeeDBContext)
         {
             _logger = logger;
             _empRepository = empRepository;
+            _dBContext = employeeDBContext;
         }
-
         public IActionResult Index()
         {
             return View();
         }
+        //public IActionResult EmployeeDetails()
+        //{
+        //    return View(_empRepository.getemployeedetails());
+        //}
+        public JsonResult TestEmployeeDetails()
+        {
+            return Json(_empRepository.getemployeedetails());
+        }
+
+        //public IActionResult DeleteDetails(int id)
+        //{
+        //    int status = _empRepository.Delete(id);
+        //    if (status != 0)
+        //    {
+        //        ViewBag.Value = "Deleted Successfully!";
+        //        //return RedirectToAction("EmployeeDetails");
+        //        return View("DeleteDetails");
+        //    }
+        //    return View();
+        //}
+
+        [ActionName("EditDetails")]
+        public IActionResult Edit()
+        {
+            return View();
+        }
+
         public IActionResult EmployeeDetails()
         {
-            return View(_empRepository.getemployeedetails());
-        }
-        [ActionName("Delete")]
-        public IActionResult DeleteDetails(int id)
-        {
-            int status = _empRepository.Delete(id);
-            if (status != 0)
-            {
-                ViewBag.Value = "Deleted Successfully!";
-                //return RedirectToAction("EmployeeDetails");
-                return View("DeleteDetails");
-            }
             return View();
         }
 
-        public IActionResult EditDetails(EmployeeDetails emp)
+        public JsonResult GetbyID(int id)
         {
-            return View();
+
+            var Employee = _empRepository.editEmployee(id);
+
+            return Json(Employee);
         }
 
-        [ActionName("Create")]
-        public IActionResult Add(EmployeeDetails details)
+        //public IActionResult EditDetails(EmployeeDetails emp)
+        //{
+        //    return View();
+        //}
+
+        public JsonResult Add([FromBody] EmployeeDetails personForm)
         {
-            return View("Add");
+            EmployeeDetails details = new EmployeeDetails();
+            details.EmpId = personForm.EmpId;
+            details.Name = personForm.Name;
+            details.Age = personForm.Age;
+            details.Salary = personForm.Salary;
+            details.State = personForm.State;
+            details.Country = personForm.Country;
+
+            return Json(_empRepository.Add(details));
         }
 
-        [ActionName("Add")]
-        public IActionResult AddEmployee(EmployeeDetails details)
+        //[ActionName("Create")]
+        //public IActionResult Add(EmployeeDetails details)
+        //{
+        //    return View("Add");
+        //}
+
+        //[ActionName("Add")]
+        //public IActionResult AddEmployee(EmployeeDetails details)
+        //{
+        //    int status = _empRepository.Add(details);
+        //    if (status != 0)
+        //    {
+        //        ViewBag.Value = "Saved Successfully!";
+        //        //return RedirectToAction("EmployeeDetails");
+        //        return View();
+        //    }
+        //    return View();
+        //}
+       
+        public JsonResult Update([FromBody] EmployeeDetails personForm)
         {
-            int status = _empRepository.Add(details);
-            if (status != 0)
-            {
-                ViewBag.Value = "Saved Successfully!";
-                //return RedirectToAction("EmployeeDetails");
-                return View();
-            }
-            return View();
+            EmployeeDetails details = new EmployeeDetails();
+            details.EmpId = personForm.EmpId;
+            details.Name = personForm.Name;
+            details.Age = personForm.Age;
+            details.Salary = personForm.Salary;
+            details.State = personForm.State;
+            details.Country = personForm.Country;
+            
+            return Json(_empRepository.Update(details));
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public JsonResult Delete(int ID)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return Json(_empRepository.Delete(ID));
         }
     }
 }

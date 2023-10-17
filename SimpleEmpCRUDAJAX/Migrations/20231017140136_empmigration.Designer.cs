@@ -11,8 +11,8 @@ using SimpleEmpCRUDAJAX.Models;
 namespace SimpleEmpCRUDAJAX.Migrations
 {
     [DbContext(typeof(EmployeeDBContext))]
-    [Migration("20231016115602_initialmigration")]
-    partial class initialmigration
+    [Migration("20231017140136_empmigration")]
+    partial class empmigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -51,7 +51,7 @@ namespace SimpleEmpCRUDAJAX.Migrations
 
                     b.HasKey("EmpId");
 
-                    b.ToTable("_employees");
+                    b.ToTable("EmployeeDetails");
                 });
 #pragma warning restore 612, 618
         }

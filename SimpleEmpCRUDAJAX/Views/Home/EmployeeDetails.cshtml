@@ -1,85 +1,79 @@
-﻿@model IEnumerable<SimpleEmpCRUDAJAX.Models.EmployeeDetails>
-
-@{
-    ViewData["Title"] = "EmployeeDetails";
-}
-
-@section scripts{
-
-    <script src="d:\ajax_crud_proj\simpleempcrudajax\simpleempcrudajax\employeejs\employee.js"></script>
-
-    <script src="~/Scripts/jquery-1.9.1.js"></script>
-    <script src="~/Scripts/bootstrap.js"></script>
-    <link href="~/Content/bootstrap.css" rel="stylesheet" />
-
+﻿@{
+    ViewData["Title"] = "Testing";
 }
 
 
-
-<h1>EmployeeDetails</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.EmpId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Age)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.State)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Country)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Salary)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+<div class="container">
+    <h2>Employees Record</h2>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="clearTextBox();">Add New Employee</button><br /><br />
+    <table class="table table-bordered table-hover">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EmpId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Age)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.State)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Country)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Salary)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "EditDetails", new { emp=item }) |
-                    @Html.ActionLink("Details", "Details") |
-                    @Html.ActionLink("Delete", "Delete")
-                </td>
+                <th>
+                    ID
+                </th>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Age
+                </th>
+                <th>
+                    State
+                </th>
+                <th>
+                    Country
+                </th>
+                <th>
+                    Action
+                </th>
             </tr>
-        }
-    </tbody>
-</table>
-
-
-@* 
-<div>
-    @Html.ActionLink("Back To List","Back")
-</div> *@
+        </thead>
+        <tbody class="tbody">
+        </tbody>
+    </table>
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title" id="myModalLabel">Add Employee</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="EmployeeId">ID</label>
+                        <input type="text" class="form-control" id="EmpID" placeholder="Id" @* disabled="disabled" *@ />
+                    </div>
+                    <div class="form-group">
+                        <label for="Name">Name</label>
+                        <input type="text" class="form-control" id="Name" placeholder="Name" />
+                    </div>
+                    <div class="form-group">
+                        <label for="Age">Age</label>
+                        <input type="text" class="form-control" id="Age" placeholder="Age" />
+                    </div>
+                    <div class="form-group">
+                        <label for="Country">Salary</label>
+                        <input type="text" class="form-control" id="Salary" placeholder="Salary" />
+                    </div>
+                    <div class="form-group">
+                        <label for="State">State</label>
+                        <input type="text" class="form-control" id="State" placeholder="State" />
+                    </div>
+                    <div class="form-group">
+                        <label for="Country">Country</label>
+                        <input type="text" class="form-control" id="Country" placeholder="Country" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnAdd" onclick="return Add();">Add</button>
+                <button type="button" class="btn btn-primary" id="btnUpdate" style="display:none;" onclick="Update();">Update</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="closeBtn();">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 

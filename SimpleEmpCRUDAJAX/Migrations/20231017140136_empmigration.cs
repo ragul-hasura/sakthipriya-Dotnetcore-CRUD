@@ -4,12 +4,12 @@
 
 namespace SimpleEmpCRUDAJAX.Migrations
 {
-    public partial class initialmigration : Migration
+    public partial class empmigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "_employees",
+                name: "EmployeeDetails",
                 columns: table => new
                 {
                     EmpId = table.Column<int>(type: "int", nullable: false)
@@ -22,14 +22,15 @@ namespace SimpleEmpCRUDAJAX.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK__employees", x => x.EmpId);
+                    table.PrimaryKey("PK_EmployeeDetails", x => x.EmpId);
                 });
+            
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "_employees");
+                name: "EmployeeDetails");
         }
     }
 }
