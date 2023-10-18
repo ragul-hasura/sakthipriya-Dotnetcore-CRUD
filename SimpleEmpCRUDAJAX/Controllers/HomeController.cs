@@ -83,25 +83,6 @@ namespace SimpleEmpCRUDAJAX.Controllers
 
             return Json(_empRepository.Add(details));
         }
-
-        //[ActionName("Create")]
-        //public IActionResult Add(EmployeeDetails details)
-        //{
-        //    return View("Add");
-        //}
-
-        //[ActionName("Add")]
-        //public IActionResult AddEmployee(EmployeeDetails details)
-        //{
-        //    int status = _empRepository.Add(details);
-        //    if (status != 0)
-        //    {
-        //        ViewBag.Value = "Saved Successfully!";
-        //        //return RedirectToAction("EmployeeDetails");
-        //        return View();
-        //    }
-        //    return View();
-        //}
        
         public JsonResult Update([FromBody] EmployeeDetails personForm)
         {

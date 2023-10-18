@@ -54,6 +54,7 @@ function Add() {
             success: function (result) {
                 loadData();
                 $('#myModal').modal('hide');
+                alert("Data Saved Successfully");
             },
             error: function (errormessage) {
                 alert(errormessage.responseText);
@@ -62,7 +63,8 @@ function Add() {
 }
 
     function getbyID(EmpID) {
-      
+
+        $('#EmpID').css('border-color', 'lightgrey');
         $('#Name').css('border-color', 'lightgrey');
         $('#Age').css('border-color', 'lightgrey');
         $('#State').css('border-color', 'lightgrey');
@@ -115,8 +117,9 @@ function Add() {
             dataType: "json",
             success: function (result) {
                 loadData();
+                alert("Data Updated Successfully");
                 $('#myModal').modal('hide');
-                $('#EmployeeID').val("");
+                $('#EmpID').val("");
                 $('#Name').val("");
                 $('#Age').val("");
                 $('#State').val("");
@@ -152,12 +155,13 @@ function closeBtn() {
 }
     function clearTextBox()
     {
-       
-        $('#EmployeeID').val("");
+        
+        $('#EmpID').val("");
         $('#Name').val("");
         $('#Age').val("");
         $('#State').val("");
         $('#Country').val("");
+        $('#Salary').val("");
         $('#btnUpdate').hide();
         $('#myModal').modal('show');
         $('#btnAdd').show();
@@ -170,7 +174,15 @@ function closeBtn() {
 //Valdidation using jquery  
     function validate()
     {
+        
         var isValid = true;
+        if ($('#EmpID').val().trim() == "") {
+            $('#EmpID').css('border-color', 'Red');
+            isValid = false;
+        }
+        else {
+            $('#EmpID').css('border-color', 'lightgrey');
+        }
         if ($('#Name').val().trim() == "") {
             $('#Name').css('border-color', 'Red');
             isValid = false;
@@ -184,6 +196,13 @@ function closeBtn() {
         }
         else {
             $('#Age').css('border-color', 'lightgrey');
+        }
+        if ($('#Salary').val().trim() == "") {
+            $('#Salary').css('border-color', 'Red');
+            isValid = false;
+        }
+        else {
+            $('#Salary').css('border-color', 'lightgrey');
         }
         if ($('#State').val().trim() == "") {
             $('#State').css('border-color', 'Red');
